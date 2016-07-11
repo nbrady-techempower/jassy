@@ -10,6 +10,22 @@
     "type": "git",
     "url": "git+https://github.com/nbrady-techempower/jassy.git"
   },
+  "peerDependencies": {
+    "react": "0.14.x || 15.x.x",
+    "react-dom": "0.14.x || 15.x.x"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-class-properties": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "eslint": "^2.10.2",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-react": "^5.1.1"
+  },
   "keywords": [
     "jassy",
     "css",
