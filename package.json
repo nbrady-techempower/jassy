@@ -1,0 +1,25 @@
+{
+  "name": "jassy",
+  "version": "0.0.1",
+  "description": "jassy is a runtime js to css interpreter that allows you to transform js objects into css on the fly. This allows you to do manipulations on your css in javascript!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbrady-techempower/jassy.git"
+  },
+  "keywords": [
+    "jassy",
+    "css",
+    "javascript",
+    "jss"
+  ],
+  "author": "Nate Brady <nathan.brady@yahoo.com> (http://twitter.com/NateBrady23)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nbrady-techempower/jassy/issues"
+  },
+  "homepage": "https://github.com/nbrady-techempower/jassy#readme"
+}
