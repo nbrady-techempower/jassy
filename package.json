@@ -4,7 +4,8 @@
   "description": "jassy is a runtime js to css interpreter that allows you to transform js objects into css on the fly. This allows you to do manipulations on your css in javascript!",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "babel -d src/",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
