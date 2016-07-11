@@ -2,10 +2,10 @@
   "name": "jassy",
   "version": "0.0.3",
   "description": "jassy is a runtime js to css interpreter that allows you to transform js objects into css on the fly. This allows you to do manipulations on your css in javascript!",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "compile": "babel -d src/",
-    "prepublish": "npm run compile"
+    "build": "./node_modules/.bin/babel src -d lib",
+    "prebublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "react-dom": "0.14.x || 15.x.x"
   },
   "devDependencies": {
-    "babel-cli": "^6.9.0",
+    "babel-cli": "^6.10.1",
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.4",
     "babel-plugin-transform-class-properties": "^6.9.0",
@@ -38,5 +38,6 @@
   "bugs": {
     "url": "https://github.com/nbrady-techempower/jassy/issues"
   },
-  "homepage": "https://github.com/nbrady-techempower/jassy#readme"
+  "homepage": "https://github.com/nbrady-techempower/jassy#readme",
+  "dependencies": {}
 }
