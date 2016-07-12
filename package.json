@@ -1,6 +1,6 @@
 {
   "name": "jassy",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "jassy is a runtime js to css interpreter that allows you to transform js objects into css on the fly. This allows you to do manipulations on your css in javascript!",
   "main": "lib/index.js",
   "scripts": {
