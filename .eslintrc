@@ -1,0 +1,80 @@
+/**
+ * http://eslint.org/docs/rules/
+ */
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  /**
+   * ESLint Rules
+   * "off" or 0 - turn the rule off
+   * "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
+   * "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
+   */
+  "rules": {
+    /**
+     * Recommended to show as errors
+     */
+    "no-cond-assign": ["error", "always"], //disallow assignment operators in conditional expressions
+    "no-console": ["error", { "allow": ["warn", "error", "log"] }], // disallow the use of console
+    "no-constant-condition": ["warn"], //disallow constant expressions in conditions
+    "no-control-regex": ["warn"], // disallow control characters in regular expressions
+    "no-debugger": ["warn"], // disallow the use of debugger
+    "no-dupe-args": ["warn"], // disallow duplicate arguments in function definitions
+    "no-dupe-keys": ["warn"], // disallow duplicate keys in object literals
+    "no-duplicate-case": ["warn"], // disallow duplicate case labels
+    "no-empty": ["warn"], // disallow empty block statements
+    "no-empty-character-class": ["warn"], // disallow empty character classes in regular expressions
+    "no-ex-assign": ["warn"], // disallow reassigning exceptions in catch clauses
+    "no-extra-boolean-cast": ["warn"], // disallow unnecessary boolean casts
+    "no-extra-parens": ["off"], // disallow unnecessary parentheses
+    "no-extra-semi": ["warn"], // disallow unnecessary semicolons
+    "no-func-assign": ["warn"], // disallow reassigning function declarations
+    "no-inner-declarations": ["warn"], // disallow function or var declarations in nested blocks
+    "no-invalid-regexp": ["warn"], // disallow invalid regular expression strings in RegExp constructors
+    "no-irregular-whitespace": ["warn"], // disallow irregular whitespace outside of strings and comments
+    "no-negated-in-lhs": ["warn"], // disallow negating the left operand in in expressions
+    "no-obj-calls": ["warn"], // disallow calling global object properties as functions
+    "no-prototype-builtins": ["warn"], // Disallow use of Object.prototypes builtins directly
+    "no-regex-spaces": ["warn"], // disallow multiple spaces in regular expression literals
+    "no-sparse-arrays": ["warn"], // disallow sparse arrays
+    "no-unexpected-multiline": ["warn"], // disallow confusing multiline expressions
+    "no-unreachable": ["warn"], // disallow unreachable code after return
+    "no-unsafe-finally": ["warn"], // disallow control flow statements in finally blocks
+    "use-isnan": ["warn"], // require calls to isNaN() when checking for NaN
+    "valid-jsdoc": ["off"], // enforce valid JSDoc comments
+    "valid-typeof": ["warn"], // enforce comparing typeof expressions against valid strings
+    "max-len": ["warn", 80, { "ignoreUrls": true }], // enforce a maximum line length
+
+    /**
+     * JS Best Practices
+     */
+    "comma-dangle": ["error", "never"],
+    "prefer-const": ["error"],
+    "no-var": ["error"],
+    "no-new-object": ["error"],
+    "object-shorthand": ["error"],
+    "object-curly-spacing": ["warn", "always"],
+    "no-magic-numbers": ["warn"], // disallow magic numbers
+
+    /**
+     * React Specific Rules
+     */
+    "react/jsx-curly-spacing": ["warn", "never"],
+    "react/sort-comp": ["warn"], //  Enforce component methods order
+    "react/jsx-uses-vars": ["warn"],
+    "react/react-in-jsx-scope": ["warn"]
+  }
+}

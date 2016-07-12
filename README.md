@@ -10,6 +10,7 @@ A js to css runtime transpiler. Why write your css in css when you can write css
 * Allows for nested media queries
 * React integration
 * Auto-prefixing
+* Easy debugging
 * Adds px unit to numbers if needed
 * easily "mixin" one style object into another with a `mixin` property.
 
