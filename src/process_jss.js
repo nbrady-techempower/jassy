@@ -6,24 +6,40 @@ export const processJSS = (style) => {
 
   if (Array.isArray(style)) return;
 
-  // Collect all the media strings
   let completedStyle = {};
-  let completedMediaQueries = {};
+  // Collect all the media strings
+  const completedMediaQueries = {};
   let checkStyle = Object.assign({}, style);
 
+  /**
+   * While there's still styles to check. We'll use checkStyle to
+   * loop back over styles that might need to be retested.
+   */
   while (Object.keys(checkStyle).length) {
 
-    let checkingStyle = Object.assign({}, checkStyle);
+    const checkingStyle = Object.assign({}, checkStyle);
+    // Reset checkStyle
     checkStyle = {};
 
+    // Begin looping over all the keys
     Object.keys(checkingStyle).forEach(key => {
+
+      // If the key is a comma separated string, it needs to exist on its
+      // own. Break it up, copy the same values in, and add it to be checked
+      if (key.indexOf(',') !== -1) {
+        key.split(',').forEach(k => {
+          checkStyle[k] = checkingStyle[key];
+        });
+        return;
+      }
+
       if (typeof checkingStyle[key] === 'object') {
 
         /**
          * For top level / anonymous mixins
          */
         if (key === 'mixin') {
-          let mixins = Object.assign({}, ...checkingStyle.mixin);
+          const mixins = Object.assign({}, ...checkingStyle.mixin);
           completedStyle = Object.assign(completedStyle || {}, processJSS(mixins));
           delete checkingStyle.mixin;
           return;
@@ -37,7 +53,16 @@ export const processJSS = (style) => {
         }
 
         Object.keys(checkingStyle[key]).forEach(key2 => {
-          let value2 = checkingStyle[key][key2];
+          const value2 = checkingStyle[key][key2];
+
+          // If the key is a comma separated string, it needs to exist on its
+          // own. Break it up, copy the same values in, and add it to be checked
+          if (key2.indexOf(',') !== -1) {
+            key2.split(',').forEach(k => {
+              checkStyle[key + ' ' + k.trim()] = value2;
+            });
+            return;
+          }
 
           /**
            * Move out media queries
@@ -48,7 +73,8 @@ export const processJSS = (style) => {
           }
           else if (key2 === 'mixin') {
             let mixins = Object.assign({}, ...checkingStyle[key].mixin);
-            completedStyle[key] = Object.assign(completedStyle[key] || {}, processJSS(mixins));
+            completedStyle[key] = 
+              Object.assign(completedStyle[key] || {}, processJSS(mixins));
           }
           // Move psuedo-selectors
           else if (isPseudoSelector(key2)) {
@@ -81,7 +107,8 @@ export const processJSS = (style) => {
     Object.keys(completedMediaQueries[media]).forEach(key => {
       Object.keys(completedMediaQueries[media][key]).forEach(key2 => {
         if (key2.indexOf(':') === 0) {
-          completedMediaQueries[media][key + key2] = completedMediaQueries[media][key][key2];
+          completedMediaQueries[media][key + key2] = 
+            completedMediaQueries[media][key][key2];
           delete completedMediaQueries[media][key][key2];
         }
       });

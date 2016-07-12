@@ -9,12 +9,22 @@ export const _JSStoCSS = (jss) => {
   }
   let css = '';
   Object.keys(jss).forEach((k,i) => {
-    autoPrefix(k).forEach(prefix => {
-      css += `${dasherize(prefix)}`;
-      // After dasherizing, pass in the original key to handle proper values
-      let value = _JSStoCSS(jss[k]);
-      css += handleValues(jss[k], k, value);
+
+    // If the property has commas, let's split it up
+    // const newKeys = (k.indexOf(',') !== -1) ?
+    //   k.split(',').map(i=>i.trim()) : [k.trim()];
+    const newKeys = [k];
+    // For each of these new keys, let's see if they need prefixing
+    newKeys.forEach(nk => {
+      autoPrefix(nk).forEach(prefix => {
+        // dasherize the prefix
+        css += `${dasherize(prefix)}`;
+        // Pass in the original key to match the proper values
+        const value = _JSStoCSS(jss[k]);
+        css += handleValues(jss[k], k, value);
+      });
     });
+
   });
   return css;
 };
