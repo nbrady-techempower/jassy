@@ -31,6 +31,10 @@ export const processJSS = (style) => {
         /**
          * End top level mixins
          */
+        // When value is an array at the top level
+        if (Array.isArray(checkingStyle[key])) {
+          completedStyle[key] = checkingStyle[key];
+        }
 
         Object.keys(checkingStyle[key]).forEach(key2 => {
           let value2 = checkingStyle[key][key2];
@@ -60,15 +64,6 @@ export const processJSS = (style) => {
           else if (isHTMLTag(key2) || isClass(key2) || key2.indexOf('>') === 0) {
             checkStyle[key + ' ' + key2] = checkingStyle[key][key2];
           }
-          // If we have an array of strings, lets join them
-          else if (Array.isArray(checkingStyle[key][key2])) {
-            completedStyle[key] = completedStyle[key] || {};
-            completedStyle[key][key2] = checkingStyle[key][key2].join(', ');
-          }
-          // If we got here with an object as the value, something went wrong.
-          // else if (typeof value2 === 'object') {
-          //   console.warn(`JSS Warning: -- `,completedStyle, `-- [${key}][${key2}]: `,value2);
-          // }
           else {
             completedStyle[key] = completedStyle[key] || {};
             completedStyle[key][key2] = checkingStyle[key][key2];
