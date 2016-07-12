@@ -1,5 +1,5 @@
 import React from 'react';
-import { JSStoCSS } from '../jss_to_css';
+import { jassy } from '../jassy';
 
 class Style extends React.Component {
   
@@ -9,7 +9,7 @@ class Style extends React.Component {
   
   render() {
     return (
-      <style dangerouslySetInnerHTML={{__html: JSStoCSS(this.props.rules)}}>
+      <style dangerouslySetInnerHTML={{__html: jassy(this.props.rules)}}>
       </style>       
     );
   }
