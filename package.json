@@ -1,7 +1,7 @@
 {
   "name": "jassy",
-  "version": "0.1.3",
-  "description": "jassy is a runtime js to css interpreter that allows you to transform js objects into css on the fly. This allows you to do manipulations on your css in javascript!",
+  "version": "0.1.4",
+  "description": "jassy is a runtime js to css transpiler that allows you to transform js objects into css on the fly. This allows you to do manipulations on your css in javascript!",
   "main": "lib/index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel src -d lib",
@@ -11,7 +11,8 @@
   "jest": {
     "unmockedModulePathPatterns": [
       "react",
-      "src"
+      "src",
+      "node_modules"
     ],
     "moduleFileExtensions": [
       "js",
@@ -35,6 +36,7 @@
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
     "eslint": "^2.10.2",
     "eslint-plugin-babel": "^3.2.0",
@@ -47,6 +49,8 @@
   "keywords": [
     "jassy",
     "css",
+    "react",
+    "reactjs",
     "javascript",
     "jss"
   ],
@@ -55,6 +59,5 @@
   "bugs": {
     "url": "https://github.com/nbrady-techempower/jassy/issues"
   },
-  "homepage": "https://github.com/nbrady-techempower/jassy#readme",
-  "dependencies": {}
+  "homepage": "https://github.com/nbrady-techempower/jassy#readme"
 }

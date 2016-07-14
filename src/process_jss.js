@@ -23,6 +23,7 @@ export const processJSS = (style) => {
 
     // Begin looping over all the keys
     Object.keys(checkingStyle).forEach(key => {
+      const value = checkingStyle[key];
 
       // If the key is a comma separated string, it needs to exist on its
       // own. Break it up, copy the same values in, and add it to be checked
@@ -35,18 +36,14 @@ export const processJSS = (style) => {
 
       if (typeof checkingStyle[key] === 'object') {
 
-        /**
-         * For top level / anonymous mixins
-         */
         if (key === 'mixin') {
-          const mixins = Object.assign({}, ...checkingStyle.mixin);
-          completedStyle = Object.assign(completedStyle || {}, processJSS(mixins));
+          const mixin = Array.isArray(value) ? value : [value];
+          const mixins = Object.assign({}, ...mixin);
+          checkStyle = Object.assign(checkStyle || {}, processJSS(mixins));
           delete checkingStyle.mixin;
           return;
         }
-        /**
-         * End top level mixins
-         */
+
         // When value is an array at the top level
         if (Array.isArray(checkingStyle[key])) {
           completedStyle[key] = checkingStyle[key];
@@ -72,9 +69,10 @@ export const processJSS = (style) => {
             completedMediaQueries[key2][key] = checkingStyle[key][key2];
           }
           else if (key2 === 'mixin') {
-            let mixins = Object.assign({}, ...checkingStyle[key].mixin);
-            completedStyle[key] = 
-              Object.assign(completedStyle[key] || {}, processJSS(mixins));
+            const mixin = Array.isArray(value2) ? value2 : [value2];
+            const mixins = Object.assign({}, ...mixin);
+            checkStyle[key] =
+              Object.assign(checkStyle[key] || {}, processJSS(mixins));
           }
           // Move psuedo-selectors
           else if (isPseudoSelector(key2)) {
