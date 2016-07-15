@@ -12,6 +12,7 @@ A js to css runtime transpiler. Why write your css in css when you can write css
 * Auto-prefixing
 * Adds px unit to numbers if needed
 * easily "mixin" one style object into another with a `mixin` property.
+* Use a `fontFace` property anywhere to add fonts to a page
 
 ## Use Cases
 
@@ -134,5 +135,35 @@ const myStyle = {
 ```
 
 You can also pass an array of objects to mixin.
+
+#### fontFace
+
+```javascript
+  const myStyle = {
+    fontFace: [
+      {
+        fontFamily: 'ProximaNovaLight',
+        src: `url('/fonts/ProximaNovaLight.ttf') format('truetype')`
+      },
+      {
+        fontFamily: 'ProximaNovaRegular',
+        src: `url('/fonts/ProximaNovaRegular.ttf') format('truetype')`
+      }
+    ],
+    // more classes and jss objects can go here
+  };
+```
+
+This will transpile to:
+```css
+@font-face {
+  font-family: ProximaNovaLight;
+  src: url('/fonts/ProximaNovaLight.ttf')format('truetype');
+}
+@font-face {
+  font-family: ProximaNovaRegular;
+  src: url('/fonts/ProximaNovaRegular.ttf')format('truetype');
+}
+```
 
 ### ToDo: More docs coming soon!

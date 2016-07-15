@@ -1,6 +1,12 @@
+/**
+ * TODO: Start using immutable objects
+ * TODO: And clean up code duplication
+ */
+
 import {
   isClass, isConnectedClass, isHTMLTag, isPseudoSelector, isMediaQuery
 } from './_helpers';
+
 
 export const processJSS = (style) => {
 
@@ -25,6 +31,13 @@ export const processJSS = (style) => {
     Object.keys(checkingStyle).forEach(key => {
       const value = checkingStyle[key];
 
+      // If fontFace and it exists already, concat the arrays
+      if (key === 'fontFace') {
+        completedStyle['fontFace'] = (completedStyle['fontFace']) ?
+          completedStyle['fontFace'].concat(value) : value;
+        return;
+      }
+
       // If the key is a comma separated string, it needs to exist on its
       // own. Break it up, copy the same values in, and add it to be checked
       if (key.indexOf(',') !== -1) {
@@ -41,6 +54,12 @@ export const processJSS = (style) => {
           const mixins = Object.assign({}, ...mixin);
           checkStyle = Object.assign(checkStyle || {}, processJSS(mixins));
           delete checkingStyle.mixin;
+          return;
+        }
+
+        if (key === 'fontFace') {
+          completedStyle['fontFace'] = (completedStyle['fontFace']) ?
+            completedStyle['fontFace'].concat(value) : value;
           return;
         }
 
