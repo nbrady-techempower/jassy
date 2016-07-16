@@ -131,7 +131,7 @@ export const processJSS = (style) => {
       });
     });
   });
-  completedStyle = Object.assign({}, completedMediaQueries, completedStyle);
+  completedStyle = Object.assign({}, completedStyle, completedMediaQueries);
 
   return completedStyle;
 };

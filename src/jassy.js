@@ -37,12 +37,6 @@ export const _JSStoCSS = (jss) => {
 
   });
 
-  // Before we return it, let's replace all the semi-colons in media queries
-  // with !important;
-  const idx = css.indexOf('@media');
-  if (idx !== -1) {
-    css = css.substr(0, idx) + css.substr(idx).replace(/;/g, ' !important;');
-  }
   return css;
 };
 
@@ -51,5 +45,13 @@ export const jassy = (jss) => {
   // Flatten the object
   jss = processJSS(jss);
   // Then turn it into a css string
-  return _JSStoCSS(jss) + fontFace;
+  jss = _JSStoCSS(jss);
+  // Before we return it, let's replace all the semi-colons in media queries
+  // with !important;
+  const idx = jss.indexOf('@media');
+  if (idx !== -1) {
+    jss = jss.substr(0, idx) + jss.substr(idx).replace(/;/g, ' !important;');
+  }
+  // now return it with the appended fontFace
+  return jss + fontFace;
 };
