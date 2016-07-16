@@ -36,6 +36,13 @@ export const _JSStoCSS = (jss) => {
     });
 
   });
+
+  // Before we return it, let's replace all the semi-colons in media queries
+  // with !important;
+  const idx = css.indexOf('@media');
+  if (idx !== -1) {
+    css = css.substr(0, idx) + css.substr(idx).replace(/;/g, ' !important;');
+  }
   return css;
 };
 
