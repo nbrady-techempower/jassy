@@ -40,7 +40,6 @@ describe('FontFace Tests', () => {
         color: 'red'
       }
     };
-    console.log(processJSS(jss));
 
     expect(jassy(jss)).toBe(`.class1{color:red;}@font-face{font-family:ProximaNovaLight;src:url('/fonts/ProximaNovaLight.ttf') format('truetype');}@font-face{font-family:ProximaNovaRegular;src:url('/fonts/ProximaNovaRegular.ttf') format('truetype');}`);
   });

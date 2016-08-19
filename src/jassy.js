@@ -9,6 +9,7 @@ export const _JSStoCSS = (jss) => {
   if (!isObjNotArr(jss)) {
     return jss + '';
   }
+
   let css = '';
 
   // separate fontFace array
@@ -16,6 +17,7 @@ export const _JSStoCSS = (jss) => {
     jss['fontFace'].forEach((ff, i) => {
       jss['fontFace'+i] = ff;
     });
+
     delete jss['fontFace'];
   }
 
@@ -23,14 +25,16 @@ export const _JSStoCSS = (jss) => {
 
     autoPrefix(k).forEach(prefix => {
       if (prefix.indexOf('fontFace') === 0) {
-        fontFace += '@font-face';
         const value = _JSStoCSS(jss[k]);
+
+        fontFace += '@font-face';
         fontFace += handleValues(jss[k], k, value);
       } else {
+        const value = _JSStoCSS(jss[k]);
+
         // dasherize the prefix
         css += `${dasherize(prefix)}`;
         // Pass in the original key to match the proper values
-        const value = _JSStoCSS(jss[k]);
         css += handleValues(jss[k], k, value);
       }
     });
@@ -42,16 +46,22 @@ export const _JSStoCSS = (jss) => {
 
 export const jassy = (jss) => {
   fontFace = '';
-  // Flatten the object
-  jss = processJSS(jss);
-  // Then turn it into a css string
-  jss = _JSStoCSS(jss);
-  // Before we return it, let's replace all the semi-colons in media queries
-  // with !important;
+
+  /**
+   * Flatten the object with processJSS and then
+   * turn it into a css string with _JSStoCSS
+   */
+  jss = _JSStoCSS(processJSS(jss));
+
+  /**
+   * Before we return it, let's replace all the semi-colons in media queries
+   * with !important;
+   */
   const idx = jss.indexOf('@media');
   if (idx !== -1) {
     jss = jss.substr(0, idx) + jss.substr(idx).replace(/;/g, ' !important;');
   }
+
   // now return it with the appended fontFace
   return jss + fontFace;
 };

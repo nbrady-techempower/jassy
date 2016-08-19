@@ -13,6 +13,7 @@ class Style extends React.Component {
       </style>       
     );
   }
+
 }
 
 export default Style;

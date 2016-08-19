@@ -1,8 +1,10 @@
 export const isUnitlessNumber = {
-  // Copied from https://github.com/facebook/react/blob/
-  // 102cd291899f9942a76c40a0e78920a6fe544dc1/
-  // src/renderers/dom/shared/CSSProperty.js
 
+  /**
+   * Copied from https://github.com/facebook/react/blob/
+   * 102cd291899f9942a76c40a0e78920a6fe544dc1/
+   * src/renderers/dom/shared/CSSProperty.js
+   */
   animationIterationCount: true,
   boxFlex: true,
   boxFlexGroup: true,
@@ -49,11 +51,12 @@ export const HTMLTags = [
   'section', 'select', 'small', 'source', 'span', 'strong', 'style',
   'sub', 'sup', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot',
   'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video',
-  'wbr'];
+  'wbr'
+];
 
 export const hexToRgb = (hex) => {
-  hex = hex.replace('#', '');
-  const bigint = parseInt(hex, 16);
+  const bigint = parseInt(hex.replace('#', ''), 16);
+
   return [
     (bigint >> 16) & 255,    // R
     (bigint >> 8) & 255,     // G

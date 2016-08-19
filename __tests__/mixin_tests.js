@@ -31,8 +31,11 @@ describe('Mixin Tests', () => {
       background: 'red',
       something: 'yellow'
     };
-    // No braces because this is essentially like creating a new mixin obj
-    // to be included in another class
+
+    /**
+     * No braces because this is essentially like creating a new mixin obj
+     * to be included in another class
+     */
     expect(jassy(jss)).toBe('background:red;something:yellow;color:blue;');
   });
 
@@ -76,8 +79,11 @@ describe('Mixin Tests', () => {
         background: 'red'
       }
     };
-    // No braces because this is essentially like creating a new mixin obj
-    // to be included in another class
+
+    /**
+     * No braces because this is essentially like creating a new mixin object
+     * to be included in another class
+     */
     expect(jassy(jss)).toBe('.class1{background:red;}.class1 .blue-stuff{color:blue;}.class1 .this-stuff{bg-color:pink;}.class1 .that-stuff{something:hello;}');
   });
 
