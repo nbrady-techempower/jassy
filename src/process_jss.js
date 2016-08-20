@@ -51,12 +51,8 @@ export const processJSS = (style) => {
       if (selector.includes(',')) {
         selector.split(',').forEach(selectorKey => {
 
-          /**
-           * Checks for whitespace and removes it from the selector
-           */
-          if (/\s/g.test(selectorKey)) {
-            selectorKey = selectorKey.replace(/\s/g, '');
-          }
+          // Checks for whitespace and removes it from the selector
+          selectorKey = selectorKey.replace(/\s/g, '');
 
           checkStyle[selectorKey] = checkingStyle[selector];
         });
