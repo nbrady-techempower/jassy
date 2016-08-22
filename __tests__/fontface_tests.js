@@ -17,7 +17,9 @@ describe('FontFace Tests', () => {
       ]
     };
 
-    expect(jassy(jss)).toBe(`@font-face{font-family:ProximaNovaLight;src:url('/fonts/ProximaNovaLight.ttf') format('truetype');}@font-face{font-family:ProximaNovaRegular;src:url('/fonts/ProximaNovaRegular.ttf') format('truetype');}`);
+    expect(jassy(jss)).toBe(
+    	`@font-face{font-family:ProximaNovaLight;src:url('/fonts/ProximaNovaLight.ttf') format('truetype');}@font-face{font-family:ProximaNovaRegular;src:url('/fonts/ProximaNovaRegular.ttf') format('truetype');}`
+		);
   });
 
   it('Properly converts font faces as a mixin', () => {
