@@ -1,5 +1,5 @@
 import React from 'react';
-import { JSStoCSS } from '../src/index.js';
+import { jassy } from '../src/index.js';
 
 const jss = {
   '.class1': {
@@ -11,7 +11,7 @@ const jss = {
 
 describe('Property Tests', () => {
   it('Properly splits nested keys', () => {
-    expect(JSStoCSS(jss)).toBe(
+    expect(jassy(jss)).toBe(
       '.class1 h1{background:red;}' +
       '.class1 h2{background:red;}' +
       '.class1 h3{background:red;}' +

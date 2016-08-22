@@ -1,5 +1,5 @@
 import React from 'react';
-import { JSStoCSS } from '../src/index.js';
+import { jassy } from '../src/index.js';
 
 const jss = {
   '.class1': {
@@ -9,6 +9,6 @@ const jss = {
 
 describe('Simple Tests', () => {
   it('Properly converts simplest class', () => {
-    expect(JSStoCSS(jss)).toBe('.class1{background:red;}');
+    expect(jassy(jss)).toBe('.class1{background:red;}');
   });
 });

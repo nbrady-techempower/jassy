@@ -1,5 +1,14 @@
+/**
+ * TODO: Start using immutable objects
+ * TODO: And clean up code duplication
+ */
+
 import {
-  isClass, isConnectedClass, isHTMLTag, isPseudoSelector, isMediaQuery
+  isClass,
+  isConnectedClass,
+  isHTMLTag,
+  isPseudoSelector,
+  isMediaQuery
 } from './_helpers';
 
 export const processJSS = (style) => {
@@ -7,8 +16,10 @@ export const processJSS = (style) => {
   if (Array.isArray(style)) return;
 
   let completedStyle = {};
+
   // Collect all the media strings
   const completedMediaQueries = {};
+
   let checkStyle = Object.assign({}, style);
 
   /**
@@ -21,46 +32,67 @@ export const processJSS = (style) => {
     // Reset checkStyle
     checkStyle = {};
 
-    // Begin looping over all the keys
-    Object.keys(checkingStyle).forEach(key => {
+    // Begin looping over all the style keys
+    Object.keys(checkingStyle).forEach(selector => {
+      const value = checkingStyle[selector];
 
-      // If the key is a comma separated string, it needs to exist on its
-      // own. Break it up, copy the same values in, and add it to be checked
-      if (key.indexOf(',') !== -1) {
-        key.split(',').forEach(k => {
-          checkStyle[k] = checkingStyle[key];
-        });
+      // If fontFace and it exists already, concat the arrays
+      if (selector === 'fontFace') {
+        completedStyle['fontFace'] = (completedStyle['fontFace']) ?
+          completedStyle['fontFace'].concat(value) : value;
+
         return;
       }
 
-      if (typeof checkingStyle[key] === 'object') {
+      /**
+       * If the key is a comma separated string, it needs to exist on its
+       * own. Break it up, copy the same values in, and add it to be checked
+       */
+      if (selector.includes(',')) {
+        selector.split(',').forEach(selectorKey => {
+          checkStyle[selectorKey] = checkingStyle[selector];
+        });
 
-        /**
-         * For top level / anonymous mixins
-         */
-        if (key === 'mixin') {
-          const mixins = Object.assign({}, ...checkingStyle.mixin);
-          completedStyle = Object.assign(completedStyle || {}, processJSS(mixins));
+        return;
+      }
+
+      if (typeof checkingStyle[selector] === 'object') {
+
+        if (selector === 'mixin') {
+          const mixin = Array.isArray(value) ? value : [value];
+          const mixins = Object.assign({}, ...mixin);
+
+          checkStyle = Object.assign(checkStyle || {}, processJSS(mixins));
+
           delete checkingStyle.mixin;
+
           return;
         }
-        /**
-         * End top level mixins
-         */
-        // When value is an array at the top level
-        if (Array.isArray(checkingStyle[key])) {
-          completedStyle[key] = checkingStyle[key];
+
+        if (selector === 'fontFace') {
+          completedStyle['fontFace'] = (completedStyle['fontFace']) ?
+            completedStyle['fontFace'].concat(value) : value;
+
+          return;
         }
 
-        Object.keys(checkingStyle[key]).forEach(key2 => {
-          const value2 = checkingStyle[key][key2];
+        // When value is an array at the top level
+        if (Array.isArray(checkingStyle[selector])) {
+          completedStyle[selector] = checkingStyle[selector];
+        }
 
-          // If the key is a comma separated string, it needs to exist on its
-          // own. Break it up, copy the same values in, and add it to be checked
+        Object.keys(checkingStyle[selector]).forEach(key2 => {
+          const value2 = checkingStyle[selector][key2];
+
+          /**
+           * If the key is a comma separated string, it needs to exist on its
+           * own. Break it up, copy the same values in, and add it to be checked
+           */
           if (key2.indexOf(',') !== -1) {
             key2.split(',').forEach(k => {
-              checkStyle[key + ' ' + k.trim()] = value2;
+              checkStyle[selector + ' ' + k.trim()] = value2;
             });
+
             return;
           }
 
@@ -69,34 +101,36 @@ export const processJSS = (style) => {
            */
           if (isMediaQuery(key2)) {
             completedMediaQueries[key2] = completedMediaQueries[key2] || {};
-            completedMediaQueries[key2][key] = checkingStyle[key][key2];
+            completedMediaQueries[key2][selector] = checkingStyle[selector][key2];
           }
           else if (key2 === 'mixin') {
-            let mixins = Object.assign({}, ...checkingStyle[key].mixin);
-            completedStyle[key] = 
-              Object.assign(completedStyle[key] || {}, processJSS(mixins));
+            const mixin = Array.isArray(value2) ? value2 : [value2];
+            const mixins = Object.assign({}, ...mixin);
+            checkStyle[selector] =
+              Object.assign(checkStyle[selector] || {}, processJSS(mixins));
           }
+
           // Move psuedo-selectors
           else if (isPseudoSelector(key2)) {
-            checkStyle[key + key2] = checkingStyle[key][key2];
+            checkStyle[selector + key2] = checkingStyle[selector][key2];
           }
 
           // Move connected classes out
           else if (isConnectedClass(key2)) {
-            checkStyle[key + key2.slice(1)] = checkingStyle[key][key2];
+            checkStyle[selector + key2.slice(1)] = checkingStyle[selector][key2];
           }
 
           // Move html tags and classes out and nested
           else if (isHTMLTag(key2) || isClass(key2) || key2.indexOf('>') === 0) {
-            checkStyle[key + ' ' + key2] = checkingStyle[key][key2];
+            checkStyle[selector + ' ' + key2] = checkingStyle[selector][key2];
           }
           else {
-            completedStyle[key] = completedStyle[key] || {};
-            completedStyle[key][key2] = checkingStyle[key][key2];
+            completedStyle[selector] = completedStyle[selector] || {};
+            completedStyle[selector][key2] = checkingStyle[selector][key2];
           }
         });
       } else {
-        completedStyle[key] = checkingStyle[key];
+        completedStyle[selector] = checkingStyle[selector];
       }
     });
 
@@ -109,12 +143,14 @@ export const processJSS = (style) => {
         if (key2.indexOf(':') === 0) {
           completedMediaQueries[media][key + key2] = 
             completedMediaQueries[media][key][key2];
+
           delete completedMediaQueries[media][key][key2];
         }
       });
     });
   });
-  completedStyle = Object.assign(completedStyle, completedMediaQueries);
+
+  completedStyle = Object.assign({}, completedStyle, completedMediaQueries);
 
   return completedStyle;
 };
