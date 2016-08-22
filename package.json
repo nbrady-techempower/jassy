@@ -6,7 +6,7 @@
   "scripts": {
     "build": "./node_modules/.bin/babel src -d lib",
     "prebublish": "npm run build",
-    "test": "jest || true"
+    "test": "jest"
   },
   "jest": {
     "unmockedModulePathPatterns": [
