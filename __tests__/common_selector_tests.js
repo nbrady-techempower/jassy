@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { jassy } from '../src/index.js';
+import {jassy} from '../src/index.js';
 
 // Class and ID Selectors
 const classAndIdSelector = {
@@ -27,7 +27,7 @@ const descendantSelector = {
   },
   '#id2': {
     '.class1': {
-      background :'red'
+      background: 'red'
     }
   }
 };
