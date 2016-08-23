@@ -188,8 +188,8 @@ describe('Pseudo Selector Tests', () => {
       'div :first-of-type{background:red;}' +
       '.class1 :first-of-type{background:blue;}' +
       '.class1:first-of-type{background:blue;}' +
-      '#id :first-of-type :nth-of-type(2n+1){background:blue;}' +
-      '#id:first-of-type #id > :nth-of-type(2n){background:blue;}'
+      '#id :first-of-type, #id :nth-of-type(2n+1){background:blue;}' +
+      '#id:first-of-type, #id>:nth-of-type(2n){background:blue;}'
     );
   });
 
