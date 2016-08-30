@@ -1,4 +1,4 @@
-# jassy
+# jassy ![travis-ci tag](https://travis-ci.org/nbrady-techempower/jassy.svg?branch=master)
 A js to css runtime transpiler. Why write your css in css when you can write css in js?
 
 ### In Beta - API Likely to change
